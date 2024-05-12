@@ -49,12 +49,13 @@ export function TopicsCombobox() {
 				<>
 					<div
 						className={clsx(
-							"flex border border-l-0 w-[22rem]",
+							"flex border border-l-0 w-[22rem] rounded-r-[0.4rem]",
 							{
 								"rounded-r-[0.4rem]": !open,
 							},
 							{
-								"rounded-b-none": open,
+								"[border-top-right-radius:0.4rem] [border-bottom-right-radius:0px]":
+									open,
 							},
 						)}
 					>
