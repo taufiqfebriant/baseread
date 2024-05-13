@@ -21,13 +21,13 @@ export default function HomePage(props: Props) {
 	}
 
 	return (
-		<main className="max-w-[81rem] mx-auto py-[2.4rem]">
-			<h1 className="font-bold text-[4rem] text-center leading-none">
+		<main className="max-w-[50.625rem] mx-auto py-6">
+			<h1 className="font-bold text-[2.5rem] text-center leading-none">
 				Baseread
 			</h1>
 
-			<div className="flex mt-[3.2rem] h-[4.4rem] text-[1.4rem]">
-				<div className="flex border border-r-0 border-zinc-200 px-[1.6rem] items-center rounded-l-[0.4rem] flex-1 gap-x-[1.6rem]">
+			<div className="flex mt-8 h-11 text-sm">
+				<div className="flex border border-r-0 border-zinc-200 px-4 items-center rounded-l flex-1 gap-x-4">
 					<div>
 						<Search size={18} className="text-zinc-400" />
 					</div>
@@ -40,8 +40,8 @@ export default function HomePage(props: Props) {
 				<TopicsCombobox />
 			</div>
 
-			<Link href="/somewhere" className="flex gap-x-[2rem] mt-[2rem]">
-				<div className="w-[30.4rem] h-[17.1rem] relative rounded-[0.8rem] overflow-hidden flex-shrink-0">
+			<Link href="/somewhere" className="flex gap-x-5 mt-5">
+				<div className="w-[19rem] h-[10.6875rem] relative rounded-lg overflow-hidden flex-shrink-0">
 					<Image
 						src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
 						alt="Morning walk"
@@ -51,10 +51,10 @@ export default function HomePage(props: Props) {
 					/>
 				</div>
 
-				<div className="flex flex-col py-[0.4rem] gap-y-[1.2rem]">
-					<div className="flex items-center gap-x-[0.2rem]">
-						<div className="flex items-center gap-x-[0.8rem]">
-							<div className="w-[2.4rem] h-[2.4rem] relative rounded-full overflow-hidden">
+				<div className="flex flex-col py-1 gap-y-3">
+					<div className="flex items-center gap-x-0.5">
+						<div className="flex items-center gap-x-2">
+							<div className="w-6 h-6 relative rounded-full overflow-hidden">
 								<Image
 									src="/sergio-de-paula-c_GmwfHBDzk-unsplash.jpg"
 									alt="User"
@@ -64,24 +64,20 @@ export default function HomePage(props: Props) {
 								/>
 							</div>
 
-							<p className="text-[1.2rem] leading-none text-zinc-600">
+							<p className="text-xs leading-none text-zinc-600">
 								Alex Thompson
 							</p>
 						</div>
 
 						<Dot className="text-zinc-500" size={18} />
 
-						<p className="text-[1.2rem] leading-none text-zinc-600">
-							May 11, 2024
-						</p>
+						<p className="text-xs leading-none text-zinc-600">May 11, 2024</p>
 					</div>
 
 					<div className="flex-1">
-						<h2 className="font-semibold text-[2rem] leading-[2.8rem]">
-							Go take a walk
-						</h2>
+						<h2 className="font-semibold text-xl">Go take a walk</h2>
 
-						<p className="text-[1.4rem] mt-[0.2rem] leading-[2.4rem] text-zinc-600 line-clamp-2">
+						<p className="text-sm mt-0.5 leading-[1.5rem] text-zinc-600 line-clamp-2">
 							Taking a walk might seem like a simple, mundane activity, but
 							it&apos;s an incredibly powerful tool for your mind and body. A
 							brisk stroll in the morning can set a positive tone for the rest
@@ -100,11 +96,11 @@ export default function HomePage(props: Props) {
 						</p>
 					</div>
 
-					<div className="flex items-center gap-x-[0.8rem]">
-						<div className="bg-zinc-100 text-zinc-600 flex items-center leading-none rounded-full text-[1.2rem] h-[2.8rem] px-[1.2rem]">
+					<div className="flex items-center gap-x-2">
+						<div className="bg-zinc-100 text-zinc-600 flex items-center leading-none rounded-full text-xs h-7 px-3">
 							Health
 						</div>
-						<div className="bg-zinc-100 text-zinc-600 flex items-center leading-none rounded-full text-[1.2rem] h-[2.8rem] px-[1.2rem]">
+						<div className="bg-zinc-100 text-zinc-600 flex items-center leading-none rounded-full text-xs h-7 px-3">
 							Lifestyle
 						</div>
 					</div>

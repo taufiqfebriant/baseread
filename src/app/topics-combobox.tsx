@@ -49,35 +49,35 @@ export function TopicsCombobox() {
 				<>
 					<div
 						className={clsx(
-							"flex border border-l-0 w-[22rem] rounded-r-[0.4rem]",
+							"flex border border-l-0 w-[13.75rem]",
 							{
-								"rounded-r-[0.4rem]": !open,
+								"rounded-r": !open,
 							},
 							{
-								"[border-top-right-radius:0.4rem] [border-bottom-right-radius:0px]":
+								"[border-top-right-radius:0.25rem] [border-bottom-right-radius:0px]":
 									open,
 							},
 						)}
 					>
 						<ComboboxInput
-							className="data-[focus]:outline-none border-l pl-[1.6rem] min-w-0"
+							className="data-[focus]:outline-none border-l pl-4 min-w-0"
 							placeholder="Select topics"
 							aria-label="Topics"
 						/>
-						<ComboboxButton className="text-zinc-400 w-[4.4rem] flex justify-center items-center flex-shrink-0">
+						<ComboboxButton className="text-zinc-400 w-11 flex justify-center items-center flex-shrink-0">
 							<ChevronsDownUp size={18} />
 						</ComboboxButton>
 					</div>
 
 					<ComboboxOptions
 						anchor="bottom start"
-						className="empty:hidden text-[1.4rem] border border-t-0 border-zinc-200 w-[22rem] py-[0.6rem] px-[0.6rem] rounded-b-[0.4rem]"
+						className="empty:hidden text-sm border border-t-0 border-zinc-200 w-[13.75rem] p-1.5 rounded-b"
 					>
 						{topics.map((topic) => (
 							<ComboboxOption
 								key={topic.id}
 								value={topic}
-								className="h-[3.2rem] flex items-center px-[1.6rem] data-[focus]:bg-zinc-100 data-[focus]:rounded-[0.4rem] justify-between"
+								className="h-8 flex items-center px-4 data-[focus]:bg-zinc-100 data-[focus]:rounded justify-between"
 							>
 								{({ selected }) => (
 									<>
