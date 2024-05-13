@@ -48,6 +48,15 @@ export default function PostPage() {
 				className="prose prose-zinc lg:prose-lg mt-10 max-w-3xl mx-auto"
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			/>
+
+			<div className="flex items-center gap-x-2 mt-10 max-w-3xl mx-auto">
+				<div className="bg-zinc-100 text-zinc-700 flex items-center leading-none rounded-full text-sm h-9 px-4">
+					Health
+				</div>
+				<div className="bg-zinc-100 text-zinc-700 flex items-center leading-none rounded-full text-sm h-9 px-4">
+					Lifestyle
+				</div>
+			</div>
 		</main>
 	);
 }
