@@ -1,3 +1,4 @@
+import typographyPlugin from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import plugin from "tailwindcss/plugin";
 
@@ -13,6 +14,7 @@ const config: Config = {
 				html: { fontSize: "10px" },
 			});
 		}),
+		typographyPlugin,
 	],
 };
 export default config;
