@@ -64,20 +64,20 @@ export default function HomePage(props: Props) {
 								/>
 							</div>
 
-							<p className="text-xs leading-none text-zinc-600">
+							<p className="text-xs leading-none text-zinc-700">
 								Alex Thompson
 							</p>
 						</div>
 
 						<Dot className="text-zinc-500" size={18} />
 
-						<p className="text-xs leading-none text-zinc-600">May 11, 2024</p>
+						<p className="text-xs leading-none text-zinc-700">May 11, 2024</p>
 					</div>
 
 					<div className="flex-1">
 						<h2 className="font-semibold text-xl">Go take a walk</h2>
 
-						<p className="text-sm mt-0.5 leading-[1.5rem] text-zinc-600 line-clamp-2">
+						<p className="text-sm mt-0.5 leading-[1.5rem] text-zinc-700 line-clamp-2">
 							Taking a walk might seem like a simple, mundane activity, but
 							it&apos;s an incredibly powerful tool for your mind and body. A
 							brisk stroll in the morning can set a positive tone for the rest
@@ -97,10 +97,10 @@ export default function HomePage(props: Props) {
 					</div>
 
 					<div className="flex items-center gap-x-2">
-						<div className="bg-zinc-100 text-zinc-600 flex items-center leading-none rounded-full text-xs h-7 px-3">
+						<div className="bg-zinc-100 text-zinc-700 flex items-center leading-none rounded-full text-xs h-7 px-3">
 							Health
 						</div>
-						<div className="bg-zinc-100 text-zinc-600 flex items-center leading-none rounded-full text-xs h-7 px-3">
+						<div className="bg-zinc-100 text-zinc-700 flex items-center leading-none rounded-full text-xs h-7 px-3">
 							Lifestyle
 						</div>
 					</div>

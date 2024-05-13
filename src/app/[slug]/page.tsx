@@ -1,3 +1,6 @@
+import { Dot } from "lucide-react";
+import Image from "next/image";
+
 const post = {
 	title: "Go take a walk",
 	image: "jordan-mcqueen-956I1peiMi4-unsplash.jpg",
@@ -6,9 +9,45 @@ const post = {
 
 export default function PostPage() {
 	return (
-		<article
-			className="prose lg:prose-xl"
-			dangerouslySetInnerHTML={{ __html: post.content }}
-		/>
+		<main className="max-w-[50.625rem] mx-auto py-16">
+			<h1 className="font-bold text-5xl text-center leading-none">
+				{post.title}
+			</h1>
+
+			<div className="flex items-center gap-x-1 justify-center mt-4">
+				<div className="flex items-center gap-x-3">
+					<div className="w-9 h-9 relative rounded-full overflow-hidden">
+						<Image
+							src="/sergio-de-paula-c_GmwfHBDzk-unsplash.jpg"
+							alt="User"
+							fill
+							className="object-cover"
+							sizes="100%"
+						/>
+					</div>
+
+					<p className="leading-none text-zinc-700">Alex Thompson</p>
+				</div>
+
+				<Dot className="text-zinc-500" size={24} />
+
+				<p className="leading-none text-zinc-700">May 11, 2024</p>
+			</div>
+
+			<div className="w-full h-[28.476875rem] relative rounded-lg overflow-hidden flex-shrink-0 mt-10">
+				<Image
+					src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
+					alt="Morning walk"
+					fill
+					className="object-cover"
+					sizes="100%"
+				/>
+			</div>
+
+			<article
+				className="prose prose-zinc lg:prose-lg mt-10 max-w-3xl mx-auto"
+				dangerouslySetInnerHTML={{ __html: post.content }}
+			/>
+		</main>
 	);
 }
