@@ -1,7 +1,7 @@
 import { Dot, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { TopicsCombobox } from "./topics-combobox";
+import { TopicsCombobox } from "../topics-combobox";
 
 type Props = {
 	searchParams: {
@@ -9,7 +9,7 @@ type Props = {
 	};
 };
 
-export default function HomePage(props: Props) {
+export default function BackupHomePage(props: Props) {
 	const topics = [];
 	topics.length = 0;
 	if (typeof props.searchParams.topic === "string") {

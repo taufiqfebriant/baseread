@@ -9,14 +9,14 @@ const post = {
 
 export default function PostPage() {
 	return (
-		<main className="max-w-[50.625rem] mx-auto py-16">
-			<h1 className="font-bold text-5xl text-center leading-none">
+		<main className="mx-auto max-w-[50.625rem] py-16">
+			<h1 className="text-center text-5xl font-bold leading-none">
 				{post.title}
 			</h1>
 
-			<div className="flex items-center gap-x-1 justify-center mt-4">
+			<div className="mt-4 flex items-center justify-center gap-x-1">
 				<div className="flex items-center gap-x-3">
-					<div className="w-9 h-9 relative rounded-full overflow-hidden">
+					<div className="relative h-9 w-9 overflow-hidden rounded-full">
 						<Image
 							src="/sergio-de-paula-c_GmwfHBDzk-unsplash.jpg"
 							alt="User"
@@ -34,7 +34,7 @@ export default function PostPage() {
 				<p className="leading-none text-zinc-700">May 11, 2024</p>
 			</div>
 
-			<div className="w-full h-[28.476875rem] relative rounded-lg overflow-hidden flex-shrink-0 mt-10">
+			<div className="relative mt-10 h-[28.476875rem] w-full flex-shrink-0 overflow-hidden rounded-lg">
 				<Image
 					src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
 					alt="Morning walk"
@@ -45,15 +45,15 @@ export default function PostPage() {
 			</div>
 
 			<article
-				className="prose prose-zinc lg:prose-lg mt-10 max-w-3xl mx-auto"
+				className="prose prose-zinc mx-auto mt-10 max-w-3xl lg:prose-lg"
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			/>
 
-			<div className="flex items-center gap-x-2 mt-10 max-w-3xl mx-auto">
-				<div className="bg-zinc-100 text-zinc-700 flex items-center leading-none rounded-full text-sm h-9 px-4">
+			<div className="mx-auto mt-10 flex max-w-3xl items-center gap-x-2">
+				<div className="flex h-9 items-center rounded-full bg-zinc-100 px-4 text-sm leading-none text-zinc-700">
 					Health
 				</div>
-				<div className="bg-zinc-100 text-zinc-700 flex items-center leading-none rounded-full text-sm h-9 px-4">
+				<div className="flex h-9 items-center rounded-full bg-zinc-100 px-4 text-sm leading-none text-zinc-700">
 					Lifestyle
 				</div>
 			</div>
