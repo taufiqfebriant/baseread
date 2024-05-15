@@ -9,9 +9,11 @@ const client = postgres({
 	pass: env.DB_PASSWORD,
 	port: env.DB_PORT,
 	db: env.DB_NAME,
+	ssl: "require",
+	max: 1,
 });
 
-async function runMigration() {
+async function main() {
 	await migrate(drizzle(client), {
 		migrationsFolder: "./drizzle",
 	});
@@ -19,4 +21,4 @@ async function runMigration() {
 	await client.end();
 }
 
-runMigration();
+main();

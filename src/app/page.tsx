@@ -67,7 +67,7 @@ export default function HomePage(props: Props) {
 									</div>
 
 									<p className="text-xs leading-none text-zinc-700">
-										Alex Thompson
+										Sergio de Paula
 									</p>
 								</div>
 

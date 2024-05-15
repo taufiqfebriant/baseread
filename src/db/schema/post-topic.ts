@@ -13,7 +13,6 @@ export const postTopic = pgTable(
 				onDelete: "restrict",
 			}),
 		topicId: varchar("topic_id", { length: 256 })
-			.unique()
 			.notNull()
 			.references(() => topics.id, {
 				onUpdate: "restrict",

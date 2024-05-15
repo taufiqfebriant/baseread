@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS "post_topic" (
 	"post_id" uuid NOT NULL,
-	"topic_id" uuid NOT NULL,
+	"topic_id" varchar(256) NOT NULL,
 	CONSTRAINT "post_topic_post_id_topic_id_pk" PRIMARY KEY("post_id","topic_id")
 );
 --> statement-breakpoint
@@ -9,13 +9,15 @@ CREATE TABLE IF NOT EXISTS "posts" (
 	"title" varchar(256) NOT NULL,
 	"image" varchar(256) NOT NULL,
 	"content" text NOT NULL,
+	"slug" varchar(256) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
-	"user_id" uuid NOT NULL
+	"user_id" uuid NOT NULL,
+	CONSTRAINT "posts_slug_unique" UNIQUE("slug")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "topics" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"id" varchar(256) PRIMARY KEY NOT NULL,
 	"name" varchar(256) NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL

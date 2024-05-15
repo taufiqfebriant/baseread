@@ -1,5 +1,5 @@
 {
-  "id": "c583d7c8-8779-4a7a-920e-9431ec41b80c",
+  "id": "abbfaf01-9e48-4714-afe5-e5b4957d88d9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -16,7 +16,7 @@
         },
         "topic_id": {
           "name": "topic_id",
-          "type": "uuid",
+          "type": "varchar(256)",
           "primaryKey": false,
           "notNull": true
         }
@@ -90,6 +90,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "slug": {
+          "name": "slug",
+          "type": "varchar(256)",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -128,7 +134,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "posts_slug_unique": {
+          "name": "posts_slug_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "slug"
+          ]
+        }
+      }
     },
     "topics": {
       "name": "topics",
@@ -136,10 +150,9 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "uuid",
+          "type": "varchar(256)",
           "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
+          "notNull": true
         },
         "name": {
           "name": "name",
