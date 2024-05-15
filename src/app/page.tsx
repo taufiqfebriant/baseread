@@ -21,7 +21,7 @@ export default function HomePage(props: Props) {
 	}
 
 	return (
-		<main className="mx-auto max-w-[50.625rem] py-6">
+		<main className="mx-auto max-w-[50.625rem] px-4 py-6 lg:px-0">
 			<h1 className="text-center text-[2.5rem] font-bold leading-none">
 				Baseread
 			</h1>
@@ -40,72 +40,94 @@ export default function HomePage(props: Props) {
 				<TopicsCombobox />
 			</div>
 
-			<Link href="/somewhere" className="mt-5 flex gap-x-5">
-				<div className="relative h-[10.6875rem] w-[19rem] flex-shrink-0 overflow-hidden rounded-lg">
-					<Image
-						src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
-						alt="Morning walk"
-						fill
-						className="object-cover"
-						sizes="100%"
-					/>
-				</div>
+			<div className="mt-6 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-8">
+				{Array.from(Array(10).keys()).map((value) => (
+					<Link href="/somewhere" className="flex flex-col gap-y-3" key={value}>
+						<div className="relative aspect-video overflow-hidden rounded-lg">
+							<Image
+								src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
+								alt="Morning walk"
+								fill
+								className="object-cover"
+								sizes="(min-width: 481px) 393px, 100vw"
+							/>
+						</div>
 
-				<div className="flex flex-col gap-y-3 py-1">
-					<div className="flex items-center gap-x-0.5">
-						<div className="flex items-center gap-x-2">
-							<div className="relative h-6 w-6 overflow-hidden rounded-full">
-								<Image
-									src="/sergio-de-paula-c_GmwfHBDzk-unsplash.jpg"
-									alt="User"
-									fill
-									className="object-cover"
-									sizes="100%"
-								/>
+						<div className="flex flex-col gap-y-3 px-1">
+							<div className="flex items-center gap-x-0.5">
+								<div className="flex items-center gap-x-2">
+									<div className="relative h-6 w-6 overflow-hidden rounded-full">
+										<Image
+											src="/sergio-de-paula-c_GmwfHBDzk-unsplash.jpg"
+											alt="User"
+											fill
+											className="object-cover"
+											sizes="100%"
+										/>
+									</div>
+
+									<p className="text-xs leading-none text-zinc-700">
+										Alex Thompson
+									</p>
+								</div>
+
+								<Dot className="text-zinc-500" size={18} />
+
+								<p className="text-xs leading-none text-zinc-700">
+									May 11, 2024
+								</p>
 							</div>
 
-							<p className="text-xs leading-none text-zinc-700">
-								Alex Thompson
-							</p>
+							<div className="flex-1">
+								<h2 className="text-xl font-semibold">Go take a walk</h2>
+
+								<p className="mt-0.5 line-clamp-2 text-sm leading-[1.5rem] text-zinc-700">
+									Taking a walk might seem like a simple, mundane activity, but
+									it&apos;s an incredibly powerful tool for your mind and body.
+									A brisk stroll in the morning can set a positive tone for the
+									rest of your day, while an evening walk can help you unwind
+									and reflect. The act of walking not only helps clear your head
+									but also has numerous physical benefits such as improving
+									cardiovascular health, strengthening muscles, and aiding
+									digestion. Beyond the physical advantages, a walk can also
+									provide a mental break and spark creativity. Stepping away
+									from your desk and immersing yourself in nature or a bustling
+									city street can help alleviate stress and boost your mood. As
+									you wander, you may find your thoughts flowing more freely,
+									leading to new ideas and fresh perspectives. So, the next time
+									you find yourself feeling stagnant or overwhelmed, remember:
+									sometimes all you need is to take a walk.
+								</p>
+							</div>
+
+							<div className="flex items-center gap-x-2">
+								<div className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700">
+									Health
+								</div>
+								<div className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700">
+									Lifestyle
+								</div>
+							</div>
 						</div>
+					</Link>
+				))}
 
-						<Dot className="text-zinc-500" size={18} />
+				{/* <div className="h-11 w-64 bg-red-500" /> */}
 
-						<p className="text-xs leading-none text-zinc-700">May 11, 2024</p>
+				{/* <Link href="/somewhere-2" className="flex-1">
+					<div className="relative aspect-video overflow-hidden rounded-lg">
+						<Image
+							src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
+							alt="Morning walk"
+							fill
+							className="object-cover"
+							sizes="304px"
+						/>
 					</div>
 
-					<div className="flex-1">
-						<h2 className="text-xl font-semibold">Go take a walk</h2>
-
-						<p className="mt-0.5 line-clamp-2 text-sm leading-[1.5rem] text-zinc-700">
-							Taking a walk might seem like a simple, mundane activity, but
-							it&apos;s an incredibly powerful tool for your mind and body. A
-							brisk stroll in the morning can set a positive tone for the rest
-							of your day, while an evening walk can help you unwind and
-							reflect. The act of walking not only helps clear your head but
-							also has numerous physical benefits such as improving
-							cardiovascular health, strengthening muscles, and aiding
-							digestion. Beyond the physical advantages, a walk can also provide
-							a mental break and spark creativity. Stepping away from your desk
-							and immersing yourself in nature or a bustling city street can
-							help alleviate stress and boost your mood. As you wander, you may
-							find your thoughts flowing more freely, leading to new ideas and
-							fresh perspectives. So, the next time you find yourself feeling
-							stagnant or overwhelmed, remember: sometimes all you need is to
-							take a walk.
-						</p>
-					</div>
-
-					<div className="flex items-center gap-x-2">
-						<div className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700">
-							Health
-						</div>
-						<div className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700">
-							Lifestyle
-						</div>
-					</div>
-				</div>
-			</Link>
+					<h2 className="text-xl font-semibold">Go take a walk</h2>
+				</Link> */}
+			</div>
 		</main>
 	);
 }

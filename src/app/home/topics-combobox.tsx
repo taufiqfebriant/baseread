@@ -49,7 +49,7 @@ export function TopicsCombobox() {
 				<>
 					<div
 						className={clsx(
-							"flex w-40 border border-l-0 sm:w-[13.75rem]",
+							"flex w-[13.75rem] border border-l-0",
 							{
 								"rounded-r": !open,
 							},
@@ -71,7 +71,7 @@ export function TopicsCombobox() {
 
 					<ComboboxOptions
 						anchor="bottom start"
-						className="w-40 rounded-b border border-zinc-200 bg-white p-1.5 text-sm empty:hidden sm:w-[13.75rem]"
+						className="w-[13.75rem] rounded-b border border-t-0 border-zinc-200 bg-white p-1.5 text-sm empty:hidden"
 					>
 						{topics.map((topic) => (
 							<ComboboxOption

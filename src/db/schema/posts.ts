@@ -8,6 +8,7 @@ export const posts = pgTable("posts", {
 	title: varchar("title", { length: 256 }).notNull(),
 	image: varchar("image", { length: 256 }).notNull(),
 	content: text("content").notNull(),
+	slug: varchar("slug", { length: 256 }).unique().notNull(),
 	createdAt: timestamp("created_at").defaultNow().notNull(),
 	updatedAt: timestamp("updated_at")
 		.defaultNow()

@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { pgTable, primaryKey, uuid } from "drizzle-orm/pg-core";
+import { pgTable, primaryKey, uuid, varchar } from "drizzle-orm/pg-core";
 import { posts } from "./posts";
 import { topics } from "./topics";
 
@@ -12,7 +12,8 @@ export const postTopic = pgTable(
 				onUpdate: "restrict",
 				onDelete: "restrict",
 			}),
-		topicId: uuid("topic_id")
+		topicId: varchar("topic_id", { length: 256 })
+			.unique()
 			.notNull()
 			.references(() => topics.id, {
 				onUpdate: "restrict",
