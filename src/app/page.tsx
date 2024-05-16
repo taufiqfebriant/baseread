@@ -1,6 +1,11 @@
+import { db } from "@/db";
+import { topics } from "@/db/schema/topics";
+import dayjs from "dayjs";
+import { inArray } from "drizzle-orm";
 import { Dot, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { getImageString } from "./actions";
 import { TopicsCombobox } from "./topics-combobox";
 
 type Props = {
@@ -9,16 +14,97 @@ type Props = {
 	};
 };
 
-export default function HomePage(props: Props) {
-	const topics = [];
-	topics.length = 0;
-	if (typeof props.searchParams.topic === "string") {
-		topics.push(props.searchParams.topic);
+export default async function HomePage(props: Props) {
+	const initialPostsResult = await db.query.posts.findMany({
+		columns: {
+			id: true,
+			slug: true,
+			image: true,
+			createdAt: true,
+			title: true,
+			content: true,
+		},
+		with: {
+			user: {
+				columns: {
+					image: true,
+					name: true,
+				},
+			},
+			postTopic: {
+				columns: {
+					topicId: true,
+				},
+			},
+		},
+	});
+
+	const imageKeys = [];
+	for (const post of initialPostsResult) {
+		imageKeys.push(post.image, post.user.image);
 	}
 
-	if (Array.isArray(props.searchParams.topic)) {
-		topics.push(...props.searchParams.topic);
-	}
+	const imagesResult = await Promise.allSettled(
+		imageKeys.map((image) => getImageString({ key: image })),
+	);
+
+	const images = imagesResult.filter((image) => image.status === "fulfilled");
+
+	const allTopics = Array.from(
+		new Set(
+			initialPostsResult
+				.map((post) => post.postTopic)
+				.flat()
+				.map((post) => post.topicId),
+		),
+	);
+
+	const topicsResult = await db
+		.select({
+			id: topics.id,
+			name: topics.name,
+		})
+		.from(topics)
+		.where(inArray(topics.id, allTopics));
+
+	const postsResult = initialPostsResult.map(({ postTopic, ...post }) => {
+		const relatedTopicIds = postTopic.flatMap((postTopic) => postTopic.topicId);
+
+		const relatedTopics = [];
+		for (const topic of topicsResult) {
+			if (relatedTopicIds.includes(topic.id)) {
+				relatedTopics.push(topic);
+			}
+		}
+
+		const image = images.find((image) => {
+			return image.value.data.key === post.image;
+		});
+
+		const userImage = images.find((image) => {
+			return image.value.data.key === post.user.image;
+		});
+
+		return {
+			...post,
+			topics: relatedTopics,
+			image: image.value.data.value,
+			user: {
+				...post.user,
+				image: userImage.value.data.value,
+			},
+		};
+	});
+
+	// const topics = [];
+	// topics.length = 0;
+	// if (typeof props.searchParams.topic === "string") {
+	// 	topics.push(props.searchParams.topic);
+	// }
+
+	// if (Array.isArray(props.searchParams.topic)) {
+	// 	topics.push(...props.searchParams.topic);
+	// }
 
 	return (
 		<main className="mx-auto max-w-[50.625rem] px-4 py-6 lg:px-0">
@@ -41,12 +127,16 @@ export default function HomePage(props: Props) {
 			</div>
 
 			<div className="mt-6 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-8">
-				{Array.from(Array(10).keys()).map((value) => (
-					<Link href="/somewhere" className="flex flex-col gap-y-3" key={value}>
+				{postsResult.map((post) => (
+					<Link
+						href="/somewhere"
+						className="flex flex-col gap-y-3"
+						key={post.id}
+					>
 						<div className="relative aspect-video overflow-hidden rounded-lg">
 							<Image
-								src="/jordan-mcqueen-956I1peiMi4-unsplash.jpg"
-								alt="Morning walk"
+								src={post.image}
+								alt={post.title}
 								fill
 								className="object-cover"
 								sizes="(min-width: 481px) 393px, 100vw"
@@ -58,8 +148,8 @@ export default function HomePage(props: Props) {
 								<div className="flex items-center gap-x-2">
 									<div className="relative h-6 w-6 overflow-hidden rounded-full">
 										<Image
-											src="/sergio-de-paula-c_GmwfHBDzk-unsplash.jpg"
-											alt="User"
+											src={post.user.image}
+											alt={post.user.name}
 											fill
 											className="object-cover"
 											sizes="100%"
@@ -67,46 +157,37 @@ export default function HomePage(props: Props) {
 									</div>
 
 									<p className="text-xs leading-none text-zinc-700">
-										Sergio de Paula
+										{post.user.name}
 									</p>
 								</div>
 
 								<Dot className="text-zinc-500" size={18} />
 
 								<p className="text-xs leading-none text-zinc-700">
-									May 11, 2024
+									{dayjs(post.createdAt).format("MMMM D, YYYY")}
 								</p>
 							</div>
 
 							<div className="flex-1">
-								<h2 className="text-xl font-semibold">Go take a walk</h2>
+								<h2 className="line-clamp-1 text-xl font-semibold">
+									{post.title}
+								</h2>
 
-								<p className="mt-0.5 line-clamp-2 text-sm leading-[1.5rem] text-zinc-700">
-									Taking a walk might seem like a simple, mundane activity, but
-									it&apos;s an incredibly powerful tool for your mind and body.
-									A brisk stroll in the morning can set a positive tone for the
-									rest of your day, while an evening walk can help you unwind
-									and reflect. The act of walking not only helps clear your head
-									but also has numerous physical benefits such as improving
-									cardiovascular health, strengthening muscles, and aiding
-									digestion. Beyond the physical advantages, a walk can also
-									provide a mental break and spark creativity. Stepping away
-									from your desk and immersing yourself in nature or a bustling
-									city street can help alleviate stress and boost your mood. As
-									you wander, you may find your thoughts flowing more freely,
-									leading to new ideas and fresh perspectives. So, the next time
-									you find yourself feeling stagnant or overwhelmed, remember:
-									sometimes all you need is to take a walk.
-								</p>
+								<div
+									className="mt-0.5 line-clamp-2 text-sm leading-[1.5rem] text-zinc-700"
+									dangerouslySetInnerHTML={{ __html: post.content }}
+								/>
 							</div>
 
 							<div className="flex items-center gap-x-2">
-								<div className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700">
-									Health
-								</div>
-								<div className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700">
-									Lifestyle
-								</div>
+								{post.topics.map((topic) => (
+									<div
+										className="flex h-7 items-center rounded-full bg-zinc-100 px-3 text-xs leading-none text-zinc-700"
+										key={topic.id}
+									>
+										{topic.name}
+									</div>
+								))}
 							</div>
 						</div>
 					</Link>
