@@ -1,5 +1,6 @@
 "use client";
 
+import { topics } from "@/db/schema/topics";
 import {
 	Combobox,
 	ComboboxButton,
@@ -9,21 +10,18 @@ import {
 } from "@headlessui/react";
 import { useDebounce } from "@uidotdev/usehooks";
 import clsx from "clsx";
+import { type InferSelectModel } from "drizzle-orm";
 import { Check, ChevronsDownUp, Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type Topic = {
-	id: string;
-	name: string;
+type Topic = Pick<InferSelectModel<typeof topics>, "id" | "name">;
+
+type Props = {
+	topics: Topic[];
 };
 
-const topics = [
-	{ id: "health", name: "Health" },
-	{ id: "lifestyle", name: "Lifestyle" },
-] satisfies Topic[];
-
-export function Filter() {
+export function Filter(props: Props) {
 	const searchParams = useSearchParams();
 
 	const pathname = usePathname();
@@ -45,7 +43,7 @@ export function Filter() {
 	}, [debouncedQuery, pathname, router, searchParams]);
 
 	const topicValues = searchParams.getAll("topic");
-	const value = topics.filter((topic) => topicValues.includes(topic.id));
+	const value = props.topics.filter((topic) => topicValues.includes(topic.id));
 
 	return (
 		<div className="mt-8 flex h-11 text-sm">
@@ -106,7 +104,7 @@ export function Filter() {
 							anchor="bottom start"
 							className="w-40 rounded-b border border-zinc-200 bg-white p-1.5 text-sm empty:hidden sm:w-[13.75rem]"
 						>
-							{topics.map((topic) => (
+							{props.topics.map((topic) => (
 								<ComboboxOption
 									key={topic.id}
 									value={topic}

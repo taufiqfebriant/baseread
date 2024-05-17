@@ -4,7 +4,7 @@ import { posts } from "@/db/schema/posts";
 import { topics } from "@/db/schema/topics";
 import { users } from "@/db/schema/users";
 import dayjs from "dayjs";
-import { and, eq, ilike, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray } from "drizzle-orm";
 import { Dot } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,7 +40,7 @@ export async function PostList(props: Props) {
 					: undefined,
 			),
 		)
-		.orderBy(posts.createdAt, posts.id);
+		.orderBy(desc(posts.createdAt), asc(posts.id));
 
 	const postIds = initialPostsResult.map((post) => post.id);
 

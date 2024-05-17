@@ -1,3 +1,6 @@
+import { db } from "@/db";
+import { topics } from "@/db/schema/topics";
+import { asc } from "drizzle-orm";
 import { Suspense } from "react";
 import { Filter } from "./filter";
 import { PostList } from "./post-list";
@@ -22,83 +25,13 @@ export default async function HomePage(props: Props) {
 
 	const query = props.searchParams?.query ?? "";
 
-	// const initialPostsResult = await db
-	// 	.selectDistinct({
-	// 		id: posts.id,
-	// 		slug: posts.slug,
-	// 		image: posts.image,
-	// 		user: {
-	// 			name: users.name,
-	// 			image: users.image,
-	// 		},
-	// 		createdAt: posts.createdAt,
-	// 		title: posts.title,
-	// 		content: posts.content,
-	// 	})
-	// 	.from(posts)
-	// 	.innerJoin(users, eq(posts.userId, users.id))
-	// 	.innerJoin(postTopic, eq(posts.id, postTopic.postId))
-	// 	.where(
-	// 		and(
-	// 			props.searchParams.query
-	// 				? ilike(posts.title, `%${props.searchParams.query}%`)
-	// 				: undefined,
-	// 			selectedTopics.length
-	// 				? inArray(postTopic.topicId, selectedTopics)
-	// 				: undefined,
-	// 		),
-	// 	)
-	// 	.orderBy(posts.createdAt, posts.id);
-
-	// const postIds = initialPostsResult.map((post) => post.id);
-
-	// const postTopicsResult = await db
-	// 	.select({
-	// 		postId: postTopic.postId,
-	// 		topic: {
-	// 			id: postTopic.topicId,
-	// 			name: topics.name,
-	// 		},
-	// 	})
-	// 	.from(postTopic)
-	// 	.innerJoin(topics, eq(postTopic.topicId, topics.id))
-	// 	.where(inArray(postTopic.postId, postIds));
-
-	// const imageKeys = [];
-	// for (const post of initialPostsResult) {
-	// 	imageKeys.push(post.image, post.user.image);
-	// }
-
-	// const imagesResult = await Promise.allSettled(
-	// 	imageKeys.map((image) => getImageString({ key: image })),
-	// );
-
-	// const images = imagesResult.filter((image) => image.status === "fulfilled");
-
-	// const postsResult = initialPostsResult.map((post) => {
-	// 	const relatedTopics = postTopicsResult
-	// 		.filter((postTopic) => postTopic.postId === post.id)
-	// 		.map((postTopic) => postTopic.topic)
-	// 		.flat();
-
-	// 	const image = images.find((image) => {
-	// 		return image.value.data.key === post.image;
-	// 	});
-
-	// 	const userImage = images.find((image) => {
-	// 		return image.value.data.key === post.user.image;
-	// 	});
-
-	// 	return {
-	// 		...post,
-	// 		topics: relatedTopics,
-	// 		image: image.value.data.value,
-	// 		user: {
-	// 			...post.user,
-	// 			image: userImage.value.data.value,
-	// 		},
-	// 	};
-	// });
+	const topicsResult = await db
+		.select({
+			id: topics.id,
+			name: topics.name,
+		})
+		.from(topics)
+		.orderBy(asc(topics.id));
 
 	return (
 		<main className="mx-auto max-w-[50.625rem] px-4 py-6 lg:px-0">
@@ -106,7 +39,7 @@ export default async function HomePage(props: Props) {
 				Baseread
 			</h1>
 
-			<Filter />
+			<Filter topics={topicsResult} />
 
 			<Suspense
 				key={query + selectedTopics.toString()}
