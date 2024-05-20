@@ -94,6 +94,12 @@ export function Filter(props: Props) {
 								className="min-w-0 border-l pl-4 data-[focus]:outline-none"
 								placeholder="Select topics"
 								aria-label="Topics"
+								displayValue={(topics: Topic[]) =>
+									topics.length
+										? topics.map((topic) => topic.name).join(", ")
+										: "All topics"
+								}
+								readOnly
 							/>
 							<ComboboxButton className="flex w-11 flex-shrink-0 items-center justify-center text-zinc-400">
 								<ChevronsDownUp size={18} />
