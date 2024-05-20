@@ -64,14 +64,14 @@ export default async function PostPage(props: Props) {
 		.where(eq(postTopic.postId, post.id));
 
 	return (
-		<main className="mx-auto max-w-[50.625rem] py-16">
-			<h1 className="text-center text-5xl font-bold leading-none">
+		<main className="mx-auto max-w-[50.625rem] px-4 py-10 lg:px-0 lg:py-16">
+			<h1 className="text-center text-3xl font-bold leading-none lg:text-5xl">
 				{post.title}
 			</h1>
 
-			<div className="mt-4 flex items-center justify-center gap-x-1">
+			<div className="mt-4 flex items-center justify-center gap-x-1 lg:mt-6">
 				<div className="flex items-center gap-x-3">
-					<div className="relative h-9 w-9 overflow-hidden rounded-full">
+					<div className="relative h-7 w-7 overflow-hidden rounded-full lg:h-9 lg:w-9">
 						<Image
 							src={userImage}
 							alt={post.user.name}
@@ -81,17 +81,19 @@ export default async function PostPage(props: Props) {
 						/>
 					</div>
 
-					<p className="leading-none text-zinc-700">{post.user.name}</p>
+					<p className="text-sm leading-none text-zinc-700 lg:text-base">
+						{post.user.name}
+					</p>
 				</div>
 
-				<Dot className="text-zinc-500" size={24} />
+				<Dot className="h-5 w-5 text-zinc-500 lg:h-6 lg:w-6" size={24} />
 
-				<p className="leading-none text-zinc-700">
+				<p className="text-sm leading-none text-zinc-700 lg:text-base">
 					{dayjs(post.createdAt).format("MMMM D, YYYY")}
 				</p>
 			</div>
 
-			<div className="relative mt-10 h-[28.476875rem] w-full flex-shrink-0 overflow-hidden rounded-lg">
+			<div className="relative mt-6 aspect-video flex-shrink-0 overflow-hidden rounded-lg lg:mt-10">
 				<Image
 					src={image}
 					alt={post.title}
@@ -102,7 +104,7 @@ export default async function PostPage(props: Props) {
 			</div>
 
 			<article
-				className="prose prose-zinc mx-auto mt-10 max-w-3xl lg:prose-lg"
+				className="prose prose-zinc mx-auto mt-6 max-w-3xl lg:prose-lg lg:mt-10"
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			/>
 
