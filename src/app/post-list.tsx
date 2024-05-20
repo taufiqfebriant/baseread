@@ -106,7 +106,7 @@ export async function PostList(props: Props) {
 							alt={post.title}
 							fill
 							className="object-cover"
-							sizes="(min-width: 481px) 393px, 100vw"
+							sizes="(min-width: 481px) 389px, 100vw"
 						/>
 					</div>
 

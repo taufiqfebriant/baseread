@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import { Filter } from "./filter";
 import { PostList } from "./post-list";
+import { PostListLoading } from "./post-list-loading";
 
 export const metadata: Metadata = {
 	title: "Baseread",
@@ -48,7 +49,7 @@ export default async function HomePage(props: Props) {
 
 			<Suspense
 				key={query + selectedTopics.toString()}
-				fallback={<p>Loading...</p>}
+				fallback={<PostListLoading />}
 			>
 				<PostList query={query} topics={selectedTopics} />
 			</Suspense>
