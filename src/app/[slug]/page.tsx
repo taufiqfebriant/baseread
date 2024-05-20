@@ -56,15 +56,19 @@ export default async function PostPage(props: Props) {
 		),
 	);
 
-	const images = imagesResult.filter((image) => image.status === "fulfilled");
+	const isFulfilled = <T,>(
+		p: PromiseSettledResult<T>,
+	): p is PromiseFulfilledResult<T> => p.status === "fulfilled";
+
+	const images = imagesResult.filter(isFulfilled);
 
 	const image = images.find((image) => {
-		return image.value.data.key === post.image;
-	})?.value.data.value;
+		return image.value.data?.key === post.image;
+	});
 
 	const userImage = images.find((image) => {
-		return image.value.data.key === post.user.image;
-	})?.value.data.value;
+		return image.value.data?.key === post.user.image;
+	});
 
 	const postTopicsResult = await db
 		.select({
@@ -86,15 +90,17 @@ export default async function PostPage(props: Props) {
 
 			<div className="mt-4 flex items-center justify-center gap-x-1 lg:mt-6">
 				<div className="flex items-center gap-x-3">
-					<div className="relative h-7 w-7 overflow-hidden rounded-full lg:h-9 lg:w-9">
-						<Image
-							src={userImage}
-							alt={post.user.name}
-							fill
-							className="object-cover"
-							sizes="(min-width: 481px) 36px, 28px"
-						/>
-					</div>
+					{userImage?.value.data?.value ? (
+						<div className="relative h-7 w-7 overflow-hidden rounded-full lg:h-9 lg:w-9">
+							<Image
+								src={userImage.value.data.value}
+								alt={post.user.name}
+								fill
+								className="object-cover"
+								sizes="(min-width: 481px) 36px, 28px"
+							/>
+						</div>
+					) : null}
 
 					<p className="text-sm leading-none text-zinc-700 lg:text-base">
 						{post.user.name}
@@ -108,15 +114,17 @@ export default async function PostPage(props: Props) {
 				</p>
 			</div>
 
-			<div className="relative mt-6 aspect-video overflow-hidden rounded-lg lg:mt-10">
-				<Image
-					src={image}
-					alt={post.title}
-					fill
-					className="object-cover"
-					sizes="(min-width: 481px) 810px, 100vw"
-				/>
-			</div>
+			{image?.value.data?.value ? (
+				<div className="relative mt-6 aspect-video overflow-hidden rounded-lg lg:mt-10">
+					<Image
+						src={image.value.data.value}
+						alt={post.title}
+						fill
+						className="object-cover"
+						sizes="(min-width: 481px) 810px, 100vw"
+					/>
+				</div>
+			) : null}
 
 			<article
 				className="prose prose-zinc mx-auto mt-6 max-w-3xl lg:prose-lg lg:mt-10"

@@ -65,7 +65,11 @@ export async function PostList(props: Props) {
 		imageKeys.map((image) => getImageString({ key: image })),
 	);
 
-	const images = imagesResult.filter((image) => image.status === "fulfilled");
+	const isFulfilled = <T,>(
+		p: PromiseSettledResult<T>,
+	): p is PromiseFulfilledResult<T> => p.status === "fulfilled";
+
+	const images = imagesResult.filter(isFulfilled);
 
 	const postsResult = initialPostsResult.map((post) => {
 		const relatedTopics = postTopicsResult
@@ -74,20 +78,20 @@ export async function PostList(props: Props) {
 			.flat();
 
 		const image = images.find((image) => {
-			return image.value.data.key === post.image;
+			return image.value.data?.key === post.image;
 		});
 
 		const userImage = images.find((image) => {
-			return image.value.data.key === post.user.image;
+			return image.value.data?.key === post.user.image;
 		});
 
 		return {
 			...post,
 			topics: relatedTopics,
-			image: image.value.data.value,
+			image: image?.value.data?.value,
 			user: {
 				...post.user,
-				image: userImage.value.data.value,
+				image: userImage?.value.data?.value,
 			},
 		};
 	});
@@ -100,28 +104,32 @@ export async function PostList(props: Props) {
 					className="flex flex-col gap-y-3"
 					key={post.id}
 				>
-					<div className="relative aspect-video overflow-hidden rounded-lg">
-						<Image
-							src={post.image}
-							alt={post.title}
-							fill
-							className="object-cover"
-							sizes="(min-width: 481px) 389px, 100vw"
-						/>
-					</div>
+					{post.image ? (
+						<div className="relative aspect-video overflow-hidden rounded-lg">
+							<Image
+								src={post.image}
+								alt={post.title}
+								fill
+								className="object-cover"
+								sizes="(min-width: 481px) 389px, 100vw"
+							/>
+						</div>
+					) : null}
 
 					<div className="flex flex-col gap-y-3 px-1">
 						<div className="flex items-center gap-x-0.5">
 							<div className="flex items-center gap-x-2">
-								<div className="relative h-6 w-6 overflow-hidden rounded-full">
-									<Image
-										src={post.user.image}
-										alt={post.user.name}
-										fill
-										className="object-cover"
-										sizes="24px"
-									/>
-								</div>
+								{post.user.image ? (
+									<div className="relative h-6 w-6 overflow-hidden rounded-full">
+										<Image
+											src={post.user.image}
+											alt={post.user.name}
+											fill
+											className="object-cover"
+											sizes="24px"
+										/>
+									</div>
+								) : null}
 
 								<p className="text-xs leading-none text-zinc-700">
 									{post.user.name}
