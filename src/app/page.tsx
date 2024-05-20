@@ -1,9 +1,14 @@
 import { db } from "@/db";
 import { topics } from "@/db/schema/topics";
 import { asc } from "drizzle-orm";
+import { Metadata } from "next";
 import { Suspense } from "react";
 import { Filter } from "./filter";
 import { PostList } from "./post-list";
+
+export const metadata: Metadata = {
+	title: "Baseread",
+};
 
 type Props = {
 	searchParams?: {

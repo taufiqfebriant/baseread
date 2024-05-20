@@ -15,6 +15,21 @@ type Props = {
 	};
 };
 
+export async function generateMetadata(params: Props) {
+	const postsResult = await db
+		.select({
+			title: posts.title,
+		})
+		.from(posts)
+		.where(eq(posts.slug, params.params.slug));
+
+	const post = postsResult[0];
+
+	return {
+		title: `${post.title} | Baseread`,
+	};
+}
+
 export default async function PostPage(props: Props) {
 	const postsResult = await db
 		.select({
