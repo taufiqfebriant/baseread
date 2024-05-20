@@ -92,7 +92,7 @@ export default async function PostPage(props: Props) {
 							alt={post.user.name}
 							fill
 							className="object-cover"
-							sizes="100%"
+							sizes="(min-width: 481px) 36px, 28px"
 						/>
 					</div>
 
@@ -108,13 +108,13 @@ export default async function PostPage(props: Props) {
 				</p>
 			</div>
 
-			<div className="relative mt-6 aspect-video flex-shrink-0 overflow-hidden rounded-lg lg:mt-10">
+			<div className="relative mt-6 aspect-video overflow-hidden rounded-lg lg:mt-10">
 				<Image
 					src={image}
 					alt={post.title}
 					fill
 					className="object-cover"
-					sizes="100%"
+					sizes="(min-width: 481px) 810px, 100vw"
 				/>
 			</div>
 

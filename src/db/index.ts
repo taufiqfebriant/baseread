@@ -13,6 +13,8 @@ const client = postgres({
 	port: env.DB_PORT,
 	db: env.DB_NAME,
 	ssl: "require",
+	idle_timeout: 20,
+	max_lifetime: 60 * 30,
 });
 
 export const db = drizzle(client, {

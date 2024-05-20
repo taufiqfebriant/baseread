@@ -119,7 +119,7 @@ export async function PostList(props: Props) {
 										alt={post.user.name}
 										fill
 										className="object-cover"
-										sizes="100%"
+										sizes="24px"
 									/>
 								</div>
 

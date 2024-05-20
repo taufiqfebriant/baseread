@@ -21,4 +21,4 @@ async function main() {
 	await client.end();
 }
 
-main();
+main().finally(() => client.end());
