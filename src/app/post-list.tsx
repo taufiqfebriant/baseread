@@ -95,7 +95,11 @@ export async function PostList(props: Props) {
 	return (
 		<div className="mt-6 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-8">
 			{postsResult.map((post) => (
-				<Link href="/somewhere" className="flex flex-col gap-y-3" key={post.id}>
+				<Link
+					href={`/${post.slug}`}
+					className="flex flex-col gap-y-3"
+					key={post.id}
+				>
 					<div className="relative aspect-video overflow-hidden rounded-lg">
 						<Image
 							src={post.image}
