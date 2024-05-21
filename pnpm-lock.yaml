@@ -50,9 +50,6 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
-      valibot:
-        specifier: ^0.30.0
-        version: 0.30.0
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -6299,7 +6296,8 @@ snapshots:
 
   uuid@9.0.1: {}
 
-  valibot@0.30.0: {}
+  valibot@0.30.0:
+    optional: true
 
   which-boxed-primitive@1.0.2:
     dependencies:
