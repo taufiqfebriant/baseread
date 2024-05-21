@@ -4,10 +4,10 @@ import { env } from "@/lib/env";
 import { s3 } from "@/lib/s3";
 import { action } from "@/lib/safe-action";
 import { GetObjectCommand } from "@aws-sdk/client-s3";
-import { minLength, object, string } from "valibot";
+import { z } from "zod";
 
-const getImageStringSchema = object({
-	key: string([minLength(1)]),
+const getImageStringSchema = z.object({
+	key: z.string().min(1),
 });
 
 export const getImageString = action(getImageStringSchema, async (data) => {
