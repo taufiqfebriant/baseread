@@ -21,4 +21,4 @@ async function main() {
 	await client.end();
 }
 
-main().finally(() => client.end());
+main().catch((e) => console.log(e));

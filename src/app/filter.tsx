@@ -1,6 +1,6 @@
 "use client";
 
-import { topics } from "@/db/schema/topics";
+import { type topics } from "@/db/schema/topics";
 import {
 	Combobox,
 	ComboboxButton,
