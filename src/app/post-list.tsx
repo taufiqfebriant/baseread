@@ -44,57 +44,64 @@ export async function PostList(props: Props) {
 
 	const postIds = initialPostsResult.map((post) => post.id);
 
-	const postTopicsResult = await db
-		.select({
-			postId: postTopic.postId,
-			topic: {
-				id: postTopic.topicId,
-				name: topics.name,
-			},
-		})
-		.from(postTopic)
-		.innerJoin(topics, eq(postTopic.topicId, topics.id))
-		.where(inArray(postTopic.postId, postIds));
+	const postsResult = [];
+	if (postIds.length) {
+		const postTopicsResult = await db
+			.select({
+				postId: postTopic.postId,
+				topic: {
+					id: postTopic.topicId,
+					name: topics.name,
+				},
+			})
+			.from(postTopic)
+			.innerJoin(topics, eq(postTopic.topicId, topics.id))
+			.where(inArray(postTopic.postId, postIds));
 
-	const imageKeys = [];
-	for (const post of initialPostsResult) {
-		imageKeys.push(post.image, post.user.image);
+		const imageKeys = [];
+		for (const post of initialPostsResult) {
+			imageKeys.push(post.image, post.user.image);
+		}
+
+		const imagesResult = await Promise.allSettled(
+			imageKeys.map((image) => getImageString({ key: image })),
+		);
+
+		const isFulfilled = <T,>(
+			p: PromiseSettledResult<T>,
+		): p is PromiseFulfilledResult<T> => p.status === "fulfilled";
+
+		const images = imagesResult.filter(isFulfilled);
+
+		for (const post of initialPostsResult) {
+			const relatedTopics = postTopicsResult
+				.filter((postTopic) => postTopic.postId === post.id)
+				.map((postTopic) => postTopic.topic)
+				.flat();
+
+			const image = images.find((image) => {
+				return image.value.data?.key === post.image;
+			});
+
+			const userImage = images.find((image) => {
+				return image.value.data?.key === post.user.image;
+			});
+
+			postsResult.push({
+				...post,
+				topics: relatedTopics,
+				image: image?.value.data?.value,
+				user: {
+					...post.user,
+					image: userImage?.value.data?.value,
+				},
+			});
+		}
 	}
 
-	const imagesResult = await Promise.allSettled(
-		imageKeys.map((image) => getImageString({ key: image })),
-	);
-
-	const isFulfilled = <T,>(
-		p: PromiseSettledResult<T>,
-	): p is PromiseFulfilledResult<T> => p.status === "fulfilled";
-
-	const images = imagesResult.filter(isFulfilled);
-
-	const postsResult = initialPostsResult.map((post) => {
-		const relatedTopics = postTopicsResult
-			.filter((postTopic) => postTopic.postId === post.id)
-			.map((postTopic) => postTopic.topic)
-			.flat();
-
-		const image = images.find((image) => {
-			return image.value.data?.key === post.image;
-		});
-
-		const userImage = images.find((image) => {
-			return image.value.data?.key === post.user.image;
-		});
-
-		return {
-			...post,
-			topics: relatedTopics,
-			image: image?.value.data?.value,
-			user: {
-				...post.user,
-				image: userImage?.value.data?.value,
-			},
-		};
-	});
+	if (!postsResult.length) {
+		return <p className="mt-6 text-center">No results found.</p>;
+	}
 
 	return (
 		<div className="mt-6 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-8">
