@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { topics } from "@/db/schema/topics";
 import { asc } from "drizzle-orm";
 import { type Metadata } from "next";
+import Image from "next/image";
 import { Suspense } from "react";
 import { Filter } from "./filter";
 import { PostList } from "./post-list";
@@ -41,9 +42,15 @@ export default async function HomePage(props: Props) {
 
 	return (
 		<main className="mx-auto max-w-[50.625rem] px-4 py-6 lg:px-0">
-			<h1 className="text-center text-[2.5rem] font-bold leading-none">
-				Baseread
-			</h1>
+			<div className="relative h-[1.875rem] w-auto">
+				<Image
+					src="/wordmark.png"
+					alt="Baseread's wordmark"
+					fill
+					sizes="430px"
+					className="object-contain"
+				/>
+			</div>
 
 			<Filter topics={topicsResult} />
 
