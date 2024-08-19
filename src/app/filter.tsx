@@ -29,7 +29,7 @@ export function Filter(props: Props) {
 
 	const initialQuery = searchParams.get("query");
 	const [query, setQuery] = useState(initialQuery ?? "");
-	const debouncedQuery = useDebounce(query, 1000);
+	const debouncedQuery = useDebounce(query, 500);
 
 	useEffect(() => {
 		const params = new URLSearchParams(searchParams);
